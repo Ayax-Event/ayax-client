@@ -1,8 +1,9 @@
 import React from "react";
 import { View } from "react-native";
+import ExploreScreenView from "./view";
 
 const ExploreScreen = () => {
-  return <View></View>;
+  return <ExploreScreenView />;
 };
 
 export default ExploreScreen;

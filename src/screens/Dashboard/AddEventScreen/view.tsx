@@ -2,12 +2,12 @@ import React from "react";
 import { Text, View } from "react-native";
 import styles from "./styles";
 
-const EventAddScreenView = () => {
+const AddEventScreenView = () => {
   return (
     <View>
-      <Text>Event Add Screen</Text>
+      <Text>Add Event Screen</Text>
     </View>
   );
 };
 
-export default EventAddScreenView;
+export default AddEventScreenView;

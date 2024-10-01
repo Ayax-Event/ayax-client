@@ -1,12 +1,12 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-const ExploreScreenView = () => {
+const EventExploreScreenView = () => {
   return (
     <View>
-      <Text>Explore screen</Text>
+      <Text>Event Explore Screen</Text>
     </View>
   );
 };
 
-export default ExploreScreenView;
+export default EventExploreScreenView;

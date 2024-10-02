@@ -8,11 +8,14 @@ import EventExploreScreen from "../screens/Dashboard/Event/EventExploreScreen";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import RegisterScreen from "../screens/Auth/RegisterScreen";
 import ForgotPasswordScreen from "../screens/Auth/ForgotPasswordScreen";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import SplashScreen from "../screens/Splashscreen";
 
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
-  const isLoggedIn = true;
+  const { isLoggedIn, isLoading } = useContext(AuthContext);
   return (
     <NavigationContainer
       theme={{
@@ -24,33 +27,49 @@ const Navigation = () => {
       }}
     >
       <Stack.Navigator>
-        <Stack.Screen
-          name="SignIn"
-          component={LoginScreen}
-          options={{
-            headerTitle: "",
-            headerShadowVisible: false,
-          }}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="DashboardTab"
-          component={Dashboard}
-        />
-        <Stack.Screen name="EventDetail" component={EventDetailScreen} />
-        <Stack.Screen name="EventExplore" component={EventExploreScreen} />
-        <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
-        <Stack.Screen name="ProfileEdit" component={ProfileEditScreen} />
-        <Stack.Screen
-          name="SignUp"
-          component={RegisterScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="ForgotPassword"
-          options={{ headerShown: false }}
-          component={ForgotPasswordScreen}
-        />
+        {isLoading ? (
+          <Stack.Screen
+            name="SplashScreen"
+            component={SplashScreen}
+            options={{ headerShown: false }}
+          />
+        ) : isLoggedIn ? (
+          <>
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="DashboardTab"
+              component={Dashboard}
+            />
+            <Stack.Screen name="EventDetail" component={EventDetailScreen} />
+            <Stack.Screen name="EventExplore" component={EventExploreScreen} />
+            <Stack.Screen
+              name="ChangePassword"
+              component={ChangePasswordScreen}
+            />
+            <Stack.Screen name="ProfileEdit" component={ProfileEditScreen} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen
+              name="SignIn"
+              component={LoginScreen}
+              options={{
+                headerTitle: "",
+                headerShadowVisible: false,
+              }}
+            />
+            <Stack.Screen
+              name="SignUp"
+              component={RegisterScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ForgotPassword"
+              options={{ headerShown: false }}
+              component={ForgotPasswordScreen}
+            />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

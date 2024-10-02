@@ -13,10 +13,10 @@ import styles from "./styles";
 import facebookLogo from "../../../assets/facebook.png";
 import googleLogo from "../../../assets/google.png";
 import { Color } from "../../../constants/Color";
-import { LoginScreenViewProps } from "../../../type";
+import { AuthScreenViewProp } from "../../../type";
 import ayaxLogo from "../../../assets/ayax-logo.png";
 
-const LoginScreenView: FC<LoginScreenViewProps> = ({
+const LoginScreenView: FC<AuthScreenViewProp> = ({
   email,
   setEmail,
   password,

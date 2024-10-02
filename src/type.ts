@@ -18,7 +18,11 @@ export type NavigationProps = {
   navigation: LoginScreenNavigationProp;
 };
 
-export type LoginScreenViewProps = {
+export type AuthScreenViewProp = {
+  name?: string;
+  setName?: (value: string) => void;
+  username?: string;
+  setUsername: (value: string) => void;
   email: string;
   setEmail: (value: string) => void;
   password: string;
@@ -26,6 +30,7 @@ export type LoginScreenViewProps = {
   rememberMe: boolean;
   setRememberMe: (value: boolean) => void;
   handleLogin: () => void;
+  handleRegister: () => void;
   navigation: LoginScreenNavigationProp;
   error: string;
   isLoading: boolean;

@@ -41,8 +41,16 @@ const Navigation = () => {
         <Stack.Screen name="EventExplore" component={EventExploreScreen} />
         <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
         <Stack.Screen name="ProfileEdit" component={ProfileEditScreen} />
-        <Stack.Screen name="SignUp" component={RegisterScreen} />
-        <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+        <Stack.Screen
+          name="SignUp"
+          component={RegisterScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ForgotPassword"
+          options={{ headerShown: false }}
+          component={ForgotPasswordScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

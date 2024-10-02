@@ -4,8 +4,10 @@ import { NavigationProps } from "../../../type";
 import { postLogin } from "../../../utils/api";
 import * as SecureStore from "expo-secure-store";
 import { AxiosError } from "axios";
+import { useNavigation } from "@react-navigation/native";
 
-const LoginScreen: FC<NavigationProps> = ({ navigation }) => {
+const LoginScreen = () => {
+  const navigation = useNavigation();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [rememberMe, setRememberMe] = useState<boolean>(false);

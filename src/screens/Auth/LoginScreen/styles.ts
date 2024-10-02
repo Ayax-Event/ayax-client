@@ -41,14 +41,25 @@ export default StyleSheet.create({
     alignItems: "center",
     marginBottom: 15,
   },
+  error: {
+    color: "red",
+    // backgroundColor: "red",
+    padding: 6,
+    borderRadius: 6,
+  },
   rememberText: {
     fontSize: 14,
     color: "#555",
   },
+  loadingContainer: {
+    flex: 1, // Takes full screen height
+    justifyContent: "center", // Centers the spinner vertically
+    alignItems: "center", // Centers the spinner horizontally
+  },
   button: {
     backgroundColor: Color.primary,
     borderRadius: 10,
-    paddingVertical: 15,
+    padding: 10,
     alignItems: "center",
     marginBottom: 20,
   },

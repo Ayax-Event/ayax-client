@@ -27,4 +27,12 @@ export type LoginScreenViewProps = {
   setRememberMe: (value: boolean) => void;
   handleLogin: () => void;
   navigation: LoginScreenNavigationProp;
+  error: string;
+  isLoading: boolean;
+};
+
+export type ProfileHeaderProps = {
+  name: string;
+  day: string;
+  profilePicture: string;
 };

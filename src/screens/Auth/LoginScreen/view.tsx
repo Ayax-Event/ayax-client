@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   Switch,
+  ActivityIndicator,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import styles from "./styles";
@@ -13,6 +14,7 @@ import facebookLogo from "../../../assets/facebook.png";
 import googleLogo from "../../../assets/google.png";
 import { Color } from "../../../constants/Color";
 import { LoginScreenViewProps } from "../../../type";
+import ayaxLogo from "../../../assets/ayax-logo.png";
 
 const LoginScreenView: FC<LoginScreenViewProps> = ({
   email,
@@ -23,15 +25,12 @@ const LoginScreenView: FC<LoginScreenViewProps> = ({
   rememberMe,
   setRememberMe,
   navigation,
+  error,
+  isLoading,
 }) => {
   return (
     <View style={styles.container}>
-      <Image
-        source={{
-          uri: "https://6hour.vercel.app/_next/image?url=%2Flogo2.png&w=128&q=75",
-        }}
-        style={styles.logo}
-      />
+      <Image source={ayaxLogo} style={styles.logo} />
       <Text style={styles.title}>Login to Your Account</Text>
 
       <View style={styles.inputContainer}>
@@ -43,7 +42,6 @@ const LoginScreenView: FC<LoginScreenViewProps> = ({
           onChangeText={setEmail}
         />
       </View>
-
       <View style={styles.inputContainer}>
         <Icon name="lock" size={24} color="#888" style={styles.icon} />
         <TextInput
@@ -60,6 +58,7 @@ const LoginScreenView: FC<LoginScreenViewProps> = ({
           style={styles.icon}
         />
       </View>
+      {error && <Text style={styles.error}>{error}</Text>}
 
       <View style={styles.rememberContainer}>
         <Switch
@@ -72,7 +71,11 @@ const LoginScreenView: FC<LoginScreenViewProps> = ({
       </View>
 
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Sign in</Text>
+        {isLoading ? (
+          <ActivityIndicator size="small" color="gray" />
+        ) : (
+          <Text style={styles.buttonText}>Sign in</Text>
+        )}
       </TouchableOpacity>
 
       <TouchableOpacity>

@@ -7,6 +7,7 @@ const AuthContext = createContext({
   isLoading: false,
   setUser: () => {},
   setIsLoading: () => {},
+  user: {},
 });
 
 const AuthProvider = ({ children }) => {

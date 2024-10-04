@@ -29,13 +29,23 @@ export const postRegister = async (
   return response;
 };
 
-export const getAllEvents = async (page) => {
-  const response = await axios({
-    method: "GET",
-    url: `${base_url}/api/event?page=${page}`,
-  });
+export const getAllEvents = async (page, filter) => {
+  try {
+    let query = `?page=${page}`;
 
-  return response;
+    if (filter) {
+      query += `&filter_categoryId=${filter}`;
+    }
+
+    console.log("Query:", query);
+
+    const response = await axios.get(`${base_url}/api/event${query}`);
+
+    return response.data; // Assuming you want to return just the data part of the response
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    throw error; // Re-throw the error so it can be handled by the caller
+  }
 };
 
 export const getAllCategory = async () => {
@@ -54,6 +64,15 @@ export const getCurrentUser = async (token) => {
     headers: {
       Authorization: "Bearer " + token,
     },
+  });
+
+  return response;
+};
+
+export const getEventDetail = async (eventId) => {
+  const response = await axios({
+    method: "GET",
+    url: `${base_url}/api/event/${eventId}`,
   });
 
   return response;

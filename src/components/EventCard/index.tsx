@@ -4,6 +4,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import tw from "twrnc";
 import { Color } from "../../constants/Color";
 import { dateConverter } from "../../utils/function/dateConverter";
+import { useNavigation } from "@react-navigation/native";
 
 interface EventCardProps {
   eventImage: string;
@@ -11,6 +12,7 @@ interface EventCardProps {
   eventDate: string;
   eventLocation: string;
   isHorizontal?: boolean;
+  eventId: string;
 }
 
 const EventCard: FC<EventCardProps> = ({
@@ -19,17 +21,31 @@ const EventCard: FC<EventCardProps> = ({
   eventDate,
   eventLocation,
   isHorizontal = false,
+  eventId,
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
-
+  const nav = useNavigation();
   const containerStyle = isHorizontal ? tw`w-72 m-2` : tw`w-full`;
 
   const imageStyle = isHorizontal
     ? tw`w-full h-40 rounded-xl mb-2`
     : tw`w-full h-40 rounded-xl mb-2`;
 
+  // Handle the entire card press (excluding love icon press)
+  const handleCardPress = () => {
+    nav.navigate("EventDetail", { eventId });
+  };
+
+  const handleLoveIconPress = (event: any) => {
+    event.stopPropagation(); // Prevent card onPress from triggering
+    setIsFavorite(!isFavorite);
+  };
+
   return (
-    <View style={[tw`bg-white h-68 rounded-xl shadow-md p-3`, containerStyle]}>
+    <TouchableOpacity
+      onPress={handleCardPress}
+      style={[tw`bg-white h-68 rounded-xl shadow-md p-3`, containerStyle]}
+    >
       <Image source={{ uri: eventImage }} style={imageStyle} />
       <View style={tw`flex-1 h-24`}>
         <Text style={tw`text-base font-bold mb-1`} numberOfLines={1}>
@@ -52,8 +68,8 @@ const EventCard: FC<EventCardProps> = ({
         </View>
       </View>
       <TouchableOpacity
-        onPress={() => setIsFavorite(!isFavorite)}
-        style={tw`absolute top-4 right-4 bg-white bg-opacity-30  rounded-full p-2`}
+        onPress={handleLoveIconPress} // Handle the love icon press
+        style={tw`absolute top-4 right-4 bg-white bg-opacity-30 rounded-full p-2`}
       >
         <Icon
           name={isFavorite ? `heart` : `heart-o`}
@@ -61,7 +77,7 @@ const EventCard: FC<EventCardProps> = ({
           color={Color.primary}
         />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -22,25 +22,17 @@ const EventScreenView = ({
   isRefreshing,
   user,
   categories,
+  handleCategorySelect,
+  selectedCategory,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>("");
-
-  const handleCategorySelect = (category: string) => {
-    if (category === selectedCategory) {
-      setSelectedCategory("");
-    } else {
-      setSelectedCategory(category);
-    }
-  };
-
   const renderCategories = useCallback(
     ({ item }) => {
       const isSelected = item.category === selectedCategory;
 
       return (
         <TouchableOpacity
-          onPress={() => handleCategorySelect(item.category)}
-          disabled={isSelected}
+          onPress={() => handleCategorySelect(item.category, item._id)}
+          // disabled={isSelected}
           style={[
             tw`p-3 rounded-lg m-2`,
             isSelected
@@ -57,6 +49,7 @@ const EventScreenView = ({
 
   const renderHorizontalItem = ({ item }: { item: Event }) => (
     <EventCard
+      eventId={item._id}
       eventImage={item.thumbnail}
       eventName={item.eventName}
       eventDate={item.dateOfEvent}
@@ -68,6 +61,7 @@ const EventScreenView = ({
   const renderVerticalItem = ({ item }: { item: Event }) => (
     <View style={tw`w-1/2 p-1`}>
       <EventCard
+        eventId={item._id}
         eventImage={item.thumbnail}
         eventName={item.eventName}
         eventDate={item.dateOfEvent}

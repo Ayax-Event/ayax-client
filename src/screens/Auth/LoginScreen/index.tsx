@@ -1,10 +1,11 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import LoginScreenView from "./view";
 import { NavigationProps } from "../../../type";
-import { postLogin } from "../../../utils/api";
+import { getCurrentUser, postLogin } from "../../../utils/api";
 import * as SecureStore from "expo-secure-store";
 import { AxiosError } from "axios";
 import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -13,6 +14,7 @@ const LoginScreen = () => {
   const [rememberMe, setRememberMe] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { setIsLoggedIn, setUser } = useContext(AuthContext);
 
   const fetchLogin = async () => {
     setIsLoading(true);
@@ -21,7 +23,12 @@ const LoginScreen = () => {
 
       if (res.status === 200) {
         await SecureStore.setItemAsync("token", res.data.accessToken);
-        navigation.navigate("DashboardTab");
+        const whoLoggedIn = await getCurrentUser(res.data.accessToken);
+        await SecureStore.setItemAsync(
+          "user",
+          JSON.stringify(whoLoggedIn.data)
+        );
+        setIsLoggedIn(true);
       }
     } catch (err: AxiosError | any) {
       console.log(err);

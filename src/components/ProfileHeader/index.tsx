@@ -19,7 +19,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({
         />
         <View>
           <Text style={tw`text-base font-normal`}>
-            Good {getTimeOfDayGreeting()} 👋
+            Good {getTimeOfDayGreeting()}
           </Text>
           <Text style={tw`text-xl font-bold`}>{name}</Text>
         </View>

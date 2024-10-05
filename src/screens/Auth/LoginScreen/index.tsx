@@ -14,7 +14,7 @@ const LoginScreen = () => {
   const [rememberMe, setRememberMe] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { setIsLoggedIn, setUser } = useContext(AuthContext);
+  const { setIsLoggedIn, setUser, setIsEo } = useContext(AuthContext);
 
   const fetchLogin = async () => {
     setIsLoading(true);
@@ -29,6 +29,8 @@ const LoginScreen = () => {
           JSON.stringify(whoLoggedIn.data)
         );
         setIsLoggedIn(true);
+        setUser(whoLoggedIn.data);
+        whoLoggedIn.data.role === "eo" ? setIsEo(true) : setIsEo(false);
       }
     } catch (err: AxiosError | any) {
       console.log(err);

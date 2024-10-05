@@ -32,7 +32,6 @@ const EventScreenView = ({
       return (
         <TouchableOpacity
           onPress={() => handleCategorySelect(item.category, item._id)}
-          // disabled={isSelected}
           style={[
             tw`p-3 rounded-lg m-2`,
             isSelected

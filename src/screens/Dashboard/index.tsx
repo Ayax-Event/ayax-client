@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import React from "react";
+import React, { useContext } from "react";
 import EventScreen from "./Event/EventScreen";
 import SearchScreen from "./SearchScreen";
 import AddEventScreen from "./AddEventScreen";
@@ -7,10 +7,13 @@ import TicketScreen from "./TicketScreen";
 import ProfileScreen from "./Profile/ProfileScreen";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Color } from "../../constants/Color";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Tab = createBottomTabNavigator();
 
 const Dashboard = () => {
+  const { isEo } = useContext(AuthContext);
+  console.log("isEo: ", isEo);
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -48,7 +51,7 @@ const Dashboard = () => {
     >
       <Tab.Screen name="Home" component={EventScreen} />
       <Tab.Screen name="Search" component={SearchScreen} />
-      <Tab.Screen name="AddEvent" component={AddEventScreen} />
+      {isEo ? <Tab.Screen name="AddEvent" component={AddEventScreen} /> : null}
       <Tab.Screen name="Ticket" component={TicketScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>

@@ -41,10 +41,10 @@ export const getAllEvents = async (page, filter) => {
 
     const response = await axios.get(`${base_url}/api/event${query}`);
 
-    return response.data; // Assuming you want to return just the data part of the response
+    return response.data;
   } catch (error) {
     console.error("Error fetching events:", error);
-    throw error; // Re-throw the error so it can be handled by the caller
+    throw error;
   }
 };
 

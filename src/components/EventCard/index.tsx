@@ -1,10 +1,11 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import tw from "twrnc";
 import { Color } from "../../constants/Color";
 import { dateConverter } from "../../utils/function/dateConverter";
 import { useNavigation } from "@react-navigation/native";
+import useLatLngToAddress from "../../hooks/useLatLngToAddress";
 
 interface EventCardProps {
   eventImage: string;
@@ -23,15 +24,19 @@ const EventCard: FC<EventCardProps> = ({
   isHorizontal = false,
   eventId,
 }) => {
+  const [address, setAddress] = useState("");
+
+  const { latitude, longtitude } = eventLocation;
+
+  useLatLngToAddress(latitude, longtitude, setAddress);
+
   const [isFavorite, setIsFavorite] = useState(false);
   const nav = useNavigation();
   const containerStyle = isHorizontal ? tw`w-72 m-2` : tw`w-full`;
-
   const imageStyle = isHorizontal
     ? tw`w-full h-40 rounded-xl mb-2`
     : tw`w-full h-40 rounded-xl mb-2`;
 
-  // Handle the entire card press (excluding love icon press)
   const handleCardPress = () => {
     nav.navigate("EventDetail", { eventId });
   };
@@ -63,7 +68,7 @@ const EventCard: FC<EventCardProps> = ({
         <View style={tw`flex-row items-center mb-1`}>
           <Icon name="map-marker" size={16} color={Color.primary} />
           <Text style={tw`ml-1 text-sm text-gray-700`} numberOfLines={1}>
-            {eventLocation}
+            {address}
           </Text>
         </View>
       </View>

@@ -72,7 +72,7 @@ const LoginScreenView: FC<AuthScreenViewProp> = ({
 
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         {isLoading ? (
-          <ActivityIndicator size="small" color="gray" />
+          <ActivityIndicator size="small" color="#fff" />
         ) : (
           <Text style={styles.buttonText}>Sign in</Text>
         )}

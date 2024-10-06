@@ -8,14 +8,18 @@ import EventExploreScreen from "../screens/Dashboard/Event/EventExploreScreen";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import RegisterScreen from "../screens/Auth/RegisterScreen";
 import ForgotPasswordScreen from "../screens/Auth/ForgotPasswordScreen";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import SplashScreen from "../screens/Splashscreen";
+import { Modal, Text, TouchableOpacity, View } from "react-native";
+import NetworkLogger from "react-native-network-logger";
 
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
   const { isLoggedIn, isLoading } = useContext(AuthContext);
+  const [isNetworkLogShown, setIsNetworkLogShown] = useState(false);
+
   return (
     <NavigationContainer
       theme={{
@@ -71,6 +75,35 @@ const Navigation = () => {
           </>
         )}
       </Stack.Navigator>
+      <Modal visible={isNetworkLogShown}>
+        <NetworkLogger />
+        <TouchableOpacity
+          style={{
+            position: "absolute",
+            bottom: 32,
+            left: 32,
+            backgroundColor: "white",
+            padding: 16,
+            borderRadius: 32,
+          }}
+          onPress={() => setIsNetworkLogShown(false)}
+        >
+          <Text style={{ fontSize: 32 }}>{"X"}</Text>
+        </TouchableOpacity>
+      </Modal>
+      <TouchableOpacity
+        style={{
+          position: "absolute",
+          bottom: 32,
+          left: 32,
+          backgroundColor: "white",
+          padding: 16,
+          borderRadius: 32,
+        }}
+        onPress={() => setIsNetworkLogShown(true)}
+      >
+        <Text style={{ fontSize: 32 }}>{"+"}</Text>
+      </TouchableOpacity>
     </NavigationContainer>
   );
 };

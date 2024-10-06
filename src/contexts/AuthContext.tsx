@@ -25,6 +25,7 @@ const AuthProvider = ({ children }) => {
     if (token) setIsLoggedIn(true);
     if (currUser) {
       setUser(JSON.parse(currUser));
+      console.log(user, "<<<<<<<<<<<<<<<<");
       if (user.role === "eo") setIsEo(true);
     }
     setIsLoading(false);

@@ -12,10 +12,11 @@ import tw from "twrnc";
 import { Color } from "../../../../constants/Color";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { dateConverter } from "../../../../utils/function/dateConverter";
+import useLatLngToAddress from "../../../../hooks/useLatLngToAddress";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-const EventDetailScreenView: React.FC = ({ eventData = {}, loading }) => {
+const EventDetailScreenView: React.FC = ({ eventData, loading, address }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showFullDescription, setShowFullDescription] = useState(false);
 
@@ -77,7 +78,7 @@ const EventDetailScreenView: React.FC = ({ eventData = {}, loading }) => {
                     </Text>
                   </View>
                   <Text style={tw`text-gray-800 font-semibold mt-1`}>
-                    {eventData?.location || "Location not set"}
+                    {address || "Location not set"}
                   </Text>
                 </View>
               </View>

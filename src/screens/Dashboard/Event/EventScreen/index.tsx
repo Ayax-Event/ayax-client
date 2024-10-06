@@ -72,7 +72,8 @@ const EventScreen: React.FC = () => {
   const handleRefresh = useCallback(() => {
     setIsRefreshing(true);
     setPage(1);
-  }, []);
+    fetchEvents(1, true);
+  }, [fetchEvents]);
 
   useEffect(() => {
     fetchCategories();
@@ -84,7 +85,8 @@ const EventScreen: React.FC = () => {
 
   useEffect(() => {
     setPage(1);
-  }, [selectedCategoryId]);
+    fetchEvents(1, true);
+  }, [selectedCategoryId, fetchEvents]);
 
   return (
     <EventScreenView

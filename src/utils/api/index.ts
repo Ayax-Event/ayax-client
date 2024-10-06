@@ -1,5 +1,12 @@
 import { default as axios, AxiosResponse } from "axios";
-import { base_url } from "@env";
+
+import * as SecureStore from "expo-secure-store";
+
+const getToken = async () => {
+  const accessToken = await SecureStore.getItemAsync("token");
+  console.log(accessToken);
+  return accessToken;
+};
 
 export const postLogin = async (
   email: string,
@@ -7,10 +14,9 @@ export const postLogin = async (
 ): Promise<AxiosResponse> => {
   const response = await axios({
     method: "POST",
-    url: `${base_url}/api/login`,
+    url: `${process.env.EXPO_PUBLIC_API_URL}/api/login`,
     data: { email, password },
   });
-
   return response;
 };
 
@@ -22,7 +28,7 @@ export const postRegister = async (
 ): Promise<AxiosResponse> => {
   const response = await axios({
     method: "POST",
-    url: `${base_url}/api/register`,
+    url: `${process.env.EXPO_PUBLIC_API_URL}/api/register`,
     data: { email, password, name, username },
   });
 
@@ -31,6 +37,7 @@ export const postRegister = async (
 
 export const getAllEvents = async (page, filter) => {
   try {
+    console.log(process.env.EXPO_PUBLIC_API_URL, "<<<<<<<");
     let query = `?page=${page}`;
 
     if (filter) {
@@ -39,7 +46,9 @@ export const getAllEvents = async (page, filter) => {
 
     console.log("Query:", query);
 
-    const response = await axios.get(`${base_url}/api/event${query}`);
+    const response = await axios.get(
+      `${process.env.EXPO_PUBLIC_API_URL}/api/event${query}`
+    );
 
     return response.data;
   } catch (error) {
@@ -51,7 +60,7 @@ export const getAllEvents = async (page, filter) => {
 export const getAllCategory = async () => {
   const response = await axios({
     method: "GET",
-    url: `${base_url}/api/list-category`,
+    url: `${process.env.EXPO_PUBLIC_API_URL}/api/list-category`,
   });
 
   return response;
@@ -60,7 +69,7 @@ export const getAllCategory = async () => {
 export const getCurrentUser = async (token) => {
   const response = await axios({
     method: "GET",
-    url: `${base_url}/api/current-user`,
+    url: `${process.env.EXPO_PUBLIC_API_URL}/api/current-user`,
     headers: {
       Authorization: "Bearer " + token,
     },
@@ -69,10 +78,25 @@ export const getCurrentUser = async (token) => {
   return response;
 };
 
+export const postEvent = async (formData) => {
+  const response = await axios.post(
+    `${process.env.EXPO_PUBLIC_API_URL}/api/add-event`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Accept: "application/json",
+      },
+    }
+  );
+
+  return response;
+};
+
 export const getEventDetail = async (eventId) => {
   const response = await axios({
     method: "GET",
-    url: `${base_url}/api/event/${eventId}`,
+    url: `${process.env.EXPO_PUBLIC_API_URL}/api/event/${eventId}`,
   });
 
   return response;

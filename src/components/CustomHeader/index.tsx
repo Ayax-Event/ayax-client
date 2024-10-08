@@ -16,15 +16,15 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 10,
+    padding: 12,
   },
   logo: {
     width: 40,
     height: 40,
-    marginRight: 20,
+    marginRight: 14,
   },
   headerText: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: "bold",
   },
 });

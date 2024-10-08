@@ -1,16 +1,20 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, FlatList } from "react-native";
+import Ticket from "../../../../components/Ticket";
+import tailwind from "twrnc";
+const tw = tailwind;
 
 const HistoryScreenView = ({ historyTickets }) => {
   return (
     <View>
       {historyTickets.length > 0 ? (
-        <View>
-          <Text>History Screen</Text>
-          <Text>{JSON.stringify(historyTickets)}</Text>
-        </View>
+        <FlatList
+          data={historyTickets}
+          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => <Ticket key={item._id} ticket={item} />}
+        />
       ) : (
-        <Text>No history tickets</Text>
+        <Text style={tw`p-2`}>No history tickets</Text>
       )}
     </View>
   );

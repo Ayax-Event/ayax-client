@@ -41,7 +41,22 @@ const Ticket = ({ ticket }) => {
 
       <View style={tw`mb-4`}>
         <Text style={tw`text-lg font-semibold text-gray-800`}>Status</Text>
-        <Text style={tw`text-sm text-gray-600`}>{ticket.status}</Text>
+        <Text
+          style={[
+            tw`text-sm`,
+            ticket.status === "paid"
+              ? tw`text-green-600`
+              : ticket.status === "pending"
+              ? tw`text-yellow-500`
+              : tw`text-red-600`,
+          ]}
+        >
+          {ticket.status === "paid"
+            ? "Paid"
+            : ticket.status === "pending"
+            ? "Pending"
+            : "Expired"}
+        </Text>
       </View>
 
       <View style={tw`flex-row justify-between mb-4`}>

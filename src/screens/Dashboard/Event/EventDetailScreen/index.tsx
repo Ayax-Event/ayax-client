@@ -36,6 +36,7 @@ interface BookingInfo {
   ticketType: string;
   ticketQuantity: string;
   ticketId: string | null;
+  eventId: string;
 }
 
 const EventDetailScreen: React.FC<EventDetailScreenProps> = ({ route }) => {
@@ -53,6 +54,7 @@ const EventDetailScreen: React.FC<EventDetailScreenProps> = ({ route }) => {
     ticketType: "",
     ticketQuantity: "1",
     ticketId: null,
+    eventId,
   });
 
   const handleInputChange = (field: keyof BookingInfo, value: string) => {
@@ -92,6 +94,7 @@ const EventDetailScreen: React.FC<EventDetailScreenProps> = ({ route }) => {
     setLoading(true);
     try {
       const res = await getEventDetail(eventId);
+
       setEventData(res.data);
     } catch (error) {
       console.log(error);

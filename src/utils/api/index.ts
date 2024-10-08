@@ -41,6 +41,8 @@ export const getAllEvents = async (page, filter) => {
       query += `&filter_categoryId=${filter}`;
     }
 
+    query += "&filter_isActive=active";
+
     console.log("Query:", query);
 
     const response = await axios.get(

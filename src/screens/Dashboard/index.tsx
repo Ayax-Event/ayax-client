@@ -14,7 +14,6 @@ const Dashboard = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        headerShown: false,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
@@ -44,7 +43,13 @@ const Dashboard = () => {
         tabBarInactiveTintColor: Color.secondary,
       })}
     >
-      <Tab.Screen name="Home" component={EventScreen} />
+      <Tab.Screen
+        name="Home"
+        options={{
+          headerShown: false,
+        }}
+        component={EventScreen}
+      />
       <Tab.Screen name="Search" component={SearchScreen} />
       <Tab.Screen name="AddEvent" component={AddEventScreen} />
       <Tab.Screen name="Ticket" component={TicketScreen} />

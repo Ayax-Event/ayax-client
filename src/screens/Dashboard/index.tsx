@@ -1,12 +1,13 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { Color } from "../../constants/Color";
 import EventScreen from "./Event/EventScreen";
 import SearchScreen from "./SearchScreen";
 import AddEventScreen from "./AddEventScreen";
 import TicketScreen from "./TicketScreen";
 import ProfileScreen from "./Profile/ProfileScreen";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { Color } from "../../constants/Color";
+import CustomHeader from "../../components/CustomHeader"; // Adjust the import path as needed
 
 const Tab = createBottomTabNavigator();
 
@@ -41,6 +42,13 @@ const Dashboard = () => {
         },
         tabBarActiveTintColor: Color.primary,
         tabBarInactiveTintColor: Color.secondary,
+        header: ({ route }) => {
+          let title = route.name;
+          if (route.name === "AddEvent") {
+            title = "Add Event";
+          }
+          return <CustomHeader title={title} />;
+        },
       })}
     >
       <Tab.Screen

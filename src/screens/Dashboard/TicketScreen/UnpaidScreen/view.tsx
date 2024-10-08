@@ -1,10 +1,17 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-const UnpaidScreenView = () => {
+const UnpaidScreenView = ({ unpaidTickets }) => {
   return (
     <View>
-      <Text>Unpaid Screen</Text>
+      {unpaidTickets.length > 0 ? (
+        <View>
+          <Text>Unpaid Screen</Text>
+          <Text>{JSON.stringify(unpaidTickets)}</Text>
+        </View>
+      ) : (
+        <Text>No history tickets</Text>
+      )}
     </View>
   );
 };

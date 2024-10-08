@@ -1,10 +1,19 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, FlatList } from "react-native";
+import Ticket from "../../../../components/Ticket";
 
-const UpcomingScreenView = () => {
+const UpcomingScreenView = ({ upcomingTickets }) => {
   return (
     <View>
-      <Text>Upcoming Screen</Text>
+      {upcomingTickets.length > 0 ? (
+        <FlatList
+          data={upcomingTickets}
+          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => <Ticket key={item._id} ticket={item} />}
+        />
+      ) : (
+        <Text>No history tickets</Text>
+      )}
     </View>
   );
 };

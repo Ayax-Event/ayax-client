@@ -1,10 +1,17 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-const HistoryScreenView = () => {
+const HistoryScreenView = ({ historyTickets }) => {
   return (
     <View>
-      <Text>History Screen</Text>
+      {historyTickets.length > 0 ? (
+        <View>
+          <Text>History Screen</Text>
+          <Text>{JSON.stringify(historyTickets)}</Text>
+        </View>
+      ) : (
+        <Text>No history tickets</Text>
+      )}
     </View>
   );
 };

@@ -110,3 +110,12 @@ export const createOrder = async (data) => {
 
   return response;
 };
+
+export const getOrders = async (filter) => {
+  const response = await axios({
+    method: "GET",
+    url: `${process.env.EXPO_PUBLIC_API_URL}/api/get-order${filter}`,
+  });
+
+  return response;
+};

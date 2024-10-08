@@ -157,10 +157,6 @@ const AddEventScreenView: React.FC<AddEventScreenViewProps> = ({
   return (
     <SafeAreaView style={tw`flex-1 p-4`}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={tw`text-3xl font-bold mb-8 text-gray-800`}>
-          Create New Event
-        </Text>
-
         {/* Event Name Input */}
         <View style={sectionStyle}>
           <Text style={labelStyle}>Event Name</Text>

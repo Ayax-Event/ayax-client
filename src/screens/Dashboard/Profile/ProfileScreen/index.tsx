@@ -4,7 +4,7 @@ import * as SecureStore from "expo-secure-store";
 import { AuthContext } from "../../../../contexts/AuthContext";
 
 const ProfileScreen = () => {
-  const { setIsLoggedIn, setUser } = useContext(AuthContext);
+  const { setIsLoggedIn, setUser, user } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogout = async () => {
@@ -20,7 +20,7 @@ const ProfileScreen = () => {
       setIsLoading(false);
     }
   };
-  return <ProfileScreenView handleLogout={handleLogout} />;
+  return <ProfileScreenView user={user} handleLogout={handleLogout} />;
 };
 
 export default ProfileScreen;

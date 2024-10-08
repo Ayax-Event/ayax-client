@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, FlatList } from "react-native";
 import Ticket from "../../../../components/Ticket";
+import tailwind from "twrnc";
 
 const UnpaidScreenView = ({ unpaidTickets }) => {
   return (
@@ -12,7 +13,7 @@ const UnpaidScreenView = ({ unpaidTickets }) => {
           renderItem={({ item }) => <Ticket key={item._id} ticket={item} />}
         />
       ) : (
-        <Text>No history tickets</Text>
+        <Text style={tailwind`p-2`}>No unpaid tickets</Text>
       )}
     </View>
   );

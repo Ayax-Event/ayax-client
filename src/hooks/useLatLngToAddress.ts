@@ -1,12 +1,18 @@
 import axios from "axios";
 import { useEffect } from "react";
 
-export default (latitude, longtitude, setAddress) => {
+type SetAddress = (address: string) => void;
+
+const useLatLngToAddress = (
+  latitude: number,
+  longitude: number,
+  setAddress: SetAddress
+) => {
   useEffect(() => {
     const getAddressFromLatLng = async () => {
       try {
         const response = await axios.get(
-          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longtitude}&key=${process.env.EXPO_GOOGLE_MAPS_API_KEY}`
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.EXPO_GOOGLE_MAPS_API_KEY}`
         );
 
         if (response.data.status === "OK") {
@@ -21,5 +27,7 @@ export default (latitude, longtitude, setAddress) => {
     };
 
     getAddressFromLatLng();
-  }, [latitude, longtitude]);
+  }, [latitude, longitude]);
 };
+
+export default useLatLngToAddress;

@@ -13,6 +13,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import SplashScreen from "../screens/Splashscreen";
 import { Modal, Text, TouchableOpacity, View } from "react-native";
 import NetworkLogger from "react-native-network-logger";
+import MidtransScreen from "../screens/MidtransScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +52,11 @@ const Navigation = () => {
               component={ChangePasswordScreen}
             />
             <Stack.Screen name="ProfileEdit" component={ProfileEditScreen} />
+            <Stack.Screen
+              name="Midtrans"
+              options={{ headerShown: false }}
+              component={MidtransScreen}
+            />
           </>
         ) : (
           <>

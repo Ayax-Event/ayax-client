@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from "react";
 import {
-  ActivityIndicator,
   FlatList,
   Text,
   View,
@@ -11,10 +10,22 @@ import ProfileHeader from "../../../../components/ProfileHeader";
 import tw from "twrnc";
 import { Color } from "../../../../constants/Color";
 import EventCard from "../../../../components/EventCard";
-import { Event } from "../../../../types";
+import { Event, Category } from "../../../../types";
 import EventCardPlaceholder from "../../../../components/EventCardPlaceholder";
+import { SafeAreaView } from "react-native-safe-area-context";
+interface EventScreenViewProps {
+  events: Event[];
+  fetchMore: () => void;
+  isLoading: boolean;
+  onRefresh: () => void;
+  isRefreshing: boolean;
+  user: any; // Replace 'any' with the appropriate user type if available
+  categories: Category[];
+  handleCategorySelect: (categoryName: string, categoryId: string) => void;
+  selectedCategory: string | null;
+}
 
-const EventScreenView = ({
+const EventScreenView: React.FC<EventScreenViewProps> = ({
   events,
   fetchMore,
   isLoading,
@@ -93,7 +104,7 @@ const EventScreenView = ({
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item) => item._id.toString()}
-            contentContainerStyle={tw`py-2`}
+            contentContainerStyle={tw``}
           />
           <FlatList
             data={categories}
@@ -110,7 +121,7 @@ const EventScreenView = ({
   );
 
   return (
-    <View style={tw`flex-1 p-4`}>
+    <SafeAreaView style={tw`p-4`}>
       <FlatList
         data={events}
         renderItem={renderVerticalItem}
@@ -142,7 +153,7 @@ const EventScreenView = ({
           ) : null
         }
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

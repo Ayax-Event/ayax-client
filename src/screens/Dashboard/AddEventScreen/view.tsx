@@ -16,13 +16,40 @@ import MapView, { Marker } from "react-native-maps";
 import { Dimensions } from "react-native";
 import * as Location from "expo-location";
 import { Color } from "../../../constants/Color";
+import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  EventData,
+  Category,
+  Location as LocationType,
+} from "../../../../types"; // Adjust the import path as needed
 
 const { width, height } = Dimensions.get("window");
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-const AddEventScreenView = ({
+interface AddEventScreenViewProps {
+  eventData: EventData;
+  handleInputChange: (field: string, value: any, index?: number | null) => void;
+  handleAddTicketType: () => void;
+  handleRemoveTicketType: (index: number) => void;
+  handleTicketInputChange: (index: number, field: string, value: any) => void;
+  handleAddTag: (tag: string) => void;
+  handleRemoveTag: (index: number) => void;
+  handleSubmit: () => void;
+  categories: Category[];
+  handleImagePicker: (field: string) => void;
+  handleDateChange: (event: any, date?: Date) => void;
+  showDatePicker: boolean;
+  setShowDatePicker: (show: boolean) => void;
+  setSelectedLocation: (location: LocationType) => void;
+  selectedLocation: LocationType;
+  isLoading: boolean;
+  errors: { [key: string]: string | null };
+  formTouched: boolean;
+}
+
+const AddEventScreenView: React.FC<AddEventScreenViewProps> = ({
   eventData,
   handleInputChange,
   handleAddTicketType,
@@ -42,8 +69,8 @@ const AddEventScreenView = ({
   errors,
   formTouched,
 }) => {
-  const [newTag, setNewTag] = useState("");
-  const [locationAddress, setLocationAddress] = useState("");
+  const [newTag, setNewTag] = useState<string>("");
+  const [locationAddress, setLocationAddress] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [isGettingCurrentLocation, setIsGettingCurrentLocation] =
@@ -128,8 +155,8 @@ const AddEventScreenView = ({
   const buttonTextStyle = tw`text-white text-center font-bold text-base`;
 
   return (
-    <ScrollView style={tw`flex-1`}>
-      <View style={tw`p-5`}>
+    <SafeAreaView style={tw`flex-1 p-4`}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={tw`text-3xl font-bold mb-8 text-gray-800`}>
           Create New Event
         </Text>
@@ -468,8 +495,8 @@ const AddEventScreenView = ({
             <Text style={[buttonTextStyle, tw`text-lg`]}>Create Event</Text>
           )}
         </TouchableOpacity>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

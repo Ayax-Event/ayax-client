@@ -1,4 +1,5 @@
-import { default as axios, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
+import { LoginResponse, RegisterResponse } from "../../type";
 
 import * as SecureStore from "expo-secure-store";
 
@@ -11,12 +12,11 @@ const getToken = async () => {
 export const postLogin = async (
   email: string,
   password: string
-): Promise<AxiosResponse> => {
-  const response = await axios({
-    method: "POST",
-    url: `${process.env.EXPO_PUBLIC_API_URL}/api/login`,
-    data: { email, password },
-  });
+): Promise<AxiosResponse<LoginResponse>> => {
+  const response = await axios.post<LoginResponse>(
+    `${process.env.EXPO_PUBLIC_API_URL}/api/login`,
+    { email, password }
+  );
   return response;
 };
 
@@ -25,19 +25,16 @@ export const postRegister = async (
   password: string,
   name: string,
   username: string
-): Promise<AxiosResponse> => {
-  const response = await axios({
-    method: "POST",
-    url: `${process.env.EXPO_PUBLIC_API_URL}/api/register`,
-    data: { email, password, name, username },
-  });
-
+): Promise<AxiosResponse<RegisterResponse>> => {
+  const response = await axios.post<RegisterResponse>(
+    `${process.env.EXPO_PUBLIC_API_URL}/api/register`,
+    { email, password, name, username }
+  );
   return response;
 };
 
 export const getAllEvents = async (page, filter) => {
   try {
-    console.log(process.env.EXPO_PUBLIC_API_URL, "<<<<<<<");
     let query = `?page=${page}`;
 
     if (filter) {
@@ -58,6 +55,7 @@ export const getAllEvents = async (page, filter) => {
 };
 
 export const getAllCategory = async () => {
+  console.log(process.env.EXPO_PUBLIC_API_URL, "<<<<<<<");
   const response = await axios({
     method: "GET",
     url: `${process.env.EXPO_PUBLIC_API_URL}/api/list-category`,
@@ -98,6 +96,15 @@ export const getEventDetail = async (eventId) => {
     method: "GET",
     url: `${process.env.EXPO_PUBLIC_API_URL}/api/event/${eventId}`,
   });
+
+  return response;
+};
+
+export const createOrder = async (data) => {
+  const response = await axios.post(
+    `${process.env.EXPO_PUBLIC_API_URL}/api/create-order`,
+    data
+  );
 
   return response;
 };

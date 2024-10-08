@@ -14,10 +14,7 @@ const Dashboard = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        headerStatusBarHeight: 0,
-        headerTitle: "",
         headerShown: false,
-        headerShadowVisible: false,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 

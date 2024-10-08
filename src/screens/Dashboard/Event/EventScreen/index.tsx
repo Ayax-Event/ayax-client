@@ -26,8 +26,6 @@ const EventScreen: React.FC = () => {
       setSelectedCategoryId((prevId) =>
         prevId === categoryId ? null : categoryId
       );
-      setEvents([]);
-      setPage(1);
     },
     []
   );

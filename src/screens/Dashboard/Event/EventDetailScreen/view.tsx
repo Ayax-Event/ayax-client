@@ -7,18 +7,51 @@ import {
   TouchableOpacity,
   Modal,
   Dimensions,
+  TextInput,
 } from "react-native";
+import RNPickerSelect from "react-native-picker-select";
 import tw from "twrnc";
+import { EventData, BookingInfo } from "../../../../type";
 import { Color } from "../../../../constants/Color";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { dateConverter } from "../../../../utils/function/dateConverter";
-import useLatLngToAddress from "../../../../hooks/useLatLngToAddress";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-const EventDetailScreenView: React.FC = ({ eventData, loading, address }) => {
+interface EventDetailScreenViewProps {
+  eventData: EventData | null;
+  loading: boolean;
+  address: string | null;
+  setShowBookingModal: (show: boolean) => void;
+  handleInputChange: (field: keyof BookingInfo, value: string) => void;
+  handleBooking: () => void;
+  showBookingModal: boolean;
+  bookingInfo: BookingInfo;
+}
+
+const EventDetailScreenView: React.FC<EventDetailScreenViewProps> = ({
+  eventData,
+  loading,
+  address,
+  setShowBookingModal,
+  handleInputChange,
+  handleBooking,
+  showBookingModal,
+  bookingInfo,
+}) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showFullDescription, setShowFullDescription] = useState(false);
+
+  const calculateTotalPrice = () => {
+    const selectedTicket = eventData?.tickets?.find(
+      (ticket) => ticket.type === bookingInfo.ticketType
+    );
+    const price = selectedTicket ? selectedTicket.price : 0;
+    const quantity = bookingInfo.ticketQuantity
+      ? parseInt(bookingInfo.ticketQuantity)
+      : 0;
+    return price * quantity;
+  };
 
   return (
     <View style={tw`flex-1 `}>
@@ -142,6 +175,7 @@ const EventDetailScreenView: React.FC = ({ eventData, loading, address }) => {
                 tw`m-4 p-4 rounded-full`,
                 { backgroundColor: Color.primary },
               ]}
+              onPress={() => setShowBookingModal(true)}
             >
               <Text style={tw`text-white text-center font-bold text-lg`}>
                 Book Event
@@ -173,6 +207,113 @@ const EventDetailScreenView: React.FC = ({ eventData, loading, address }) => {
                   }}
                 />
               )}
+            </View>
+          </Modal>
+          <Modal
+            visible={showBookingModal}
+            transparent={true}
+            animationType="slide"
+            onRequestClose={() => setShowBookingModal(false)}
+          >
+            <View
+              style={tw`flex-1 bg-black bg-opacity-50 justify-center items-center`}
+            >
+              <View style={tw`bg-white p-5 rounded-lg w-5/6`}>
+                <Text style={tw`text-2xl font-bold mb-4`}>Book Event</Text>
+
+                <TextInput
+                  style={tw`border border-gray-300 rounded-lg p-2 mb-2`}
+                  placeholder="First Name"
+                  value={bookingInfo.firstName}
+                  onChangeText={(text) => handleInputChange("firstName", text)}
+                />
+                <TextInput
+                  style={tw`border border-gray-300 rounded-lg p-2 mb-2`}
+                  placeholder="Last Name"
+                  value={bookingInfo.lastName}
+                  onChangeText={(text) => handleInputChange("lastName", text)}
+                />
+                <TextInput
+                  style={tw`border border-gray-300 rounded-lg p-2 mb-2`}
+                  placeholder="Phone Number"
+                  value={bookingInfo.phoneNumber}
+                  onChangeText={(text) =>
+                    handleInputChange("phoneNumber", text)
+                  }
+                  keyboardType="phone-pad"
+                />
+                <TextInput
+                  style={tw`border border-gray-300 rounded-lg p-2 mb-2`}
+                  placeholder="Email"
+                  value={bookingInfo.email}
+                  onChangeText={(text) => handleInputChange("email", text)}
+                  keyboardType="email-address"
+                />
+
+                <View style={tw`border border-gray-300 rounded-lg mb-2`}>
+                  <RNPickerSelect
+                    placeholder={{
+                      label: "Select Ticket Type",
+                      value: null,
+                    }}
+                    value={bookingInfo.ticketType}
+                    onValueChange={(itemValue) =>
+                      handleInputChange("ticketType", itemValue)
+                    }
+                    items={
+                      eventData?.tickets?.map((ticket) => ({
+                        label: `${ticket.type} - Rp.${ticket.price}`,
+                        value: ticket.type,
+                      })) || []
+                    }
+                  />
+                </View>
+
+                <View style={tw`border border-gray-300 rounded-lg mb-4`}>
+                  <RNPickerSelect
+                    placeholder={{
+                      label: "Select Quantity",
+                      value: null,
+                    }}
+                    value={bookingInfo.ticketQuantity}
+                    onValueChange={(itemValue) =>
+                      handleInputChange("ticketQuantity", itemValue)
+                    }
+                    items={[...Array(10)].map((_, i) => ({
+                      label: `${i + 1}`,
+                      value: `${i + 1}`,
+                    }))}
+                  />
+                </View>
+
+                {/* Total Price Section */}
+                <View style={tw`mb-4`}>
+                  <Text style={tw`text-lg font-semibold`}>
+                    Total: Rp.{calculateTotalPrice()}
+                  </Text>
+                </View>
+
+                <TouchableOpacity
+                  style={[
+                    tw`p-3 rounded-lg mb-2`,
+                    { backgroundColor: Color.primary },
+                  ]}
+                  onPress={handleBooking}
+                >
+                  <Text style={tw`text-white text-center font-bold`}>
+                    Confirm Booking
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={tw`p-3 rounded-lg bg-red-500`}
+                  onPress={() => setShowBookingModal(false)}
+                >
+                  <Text style={tw`text-white text-center font-bold`}>
+                    Cancel
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </Modal>
         </>

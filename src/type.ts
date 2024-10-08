@@ -3,10 +3,13 @@ import {
   NavigationProp,
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { AxiosResponse } from "axios";
 
+// Define the RootStackParamList
 type RootStackParamList = {
   Login: undefined;
-  Home: undefined;
+  Register: undefined;
+  // Add other routes as needed
 };
 
 type LoginScreenNavigationProp = CompositeNavigationProp<
@@ -25,19 +28,62 @@ export type AuthScreenViewProp = {
   setUsername: (value: string) => void;
   email: string;
   setEmail: (value: string) => void;
-  password: string;
-  setPassword: (value: string) => void;
-  rememberMe: boolean;
-  setRememberMe: (value: boolean) => void;
-  handleLogin: () => void;
-  handleRegister: () => void;
-  navigation: LoginScreenNavigationProp;
-  error: string;
-  isLoading: boolean;
+  categoryName?: string;
+  categoryId?: string;
 };
 
-export type ProfileHeaderProps = {
+export interface Ticket {
+  _id: string;
+  type: string;
+  price: number;
+}
+
+export interface EventData {
+  eventName: string;
+  eventDate: string;
+  tags: string[];
+  tickets: Ticket[];
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+  creator: {
+    profilepict: string;
+    username: string;
+  };
+  description: string;
+  images: string[];
+  thumbnail: string;
+}
+
+export interface Category {
+  id: string;
   name: string;
-  day: string;
-  profilePicture: string;
-};
+}
+
+export interface Location {
+  latitude: number;
+  longitude: number;
+}
+
+export interface LoginResponse {
+  token: string;
+  user: {
+    id: string;
+    email: string;
+    name: string;
+    username: string;
+  };
+}
+
+export interface RegisterResponse {
+  message: string;
+  user: {
+    id: string;
+    email: string;
+    name: string;
+    username: string;
+  };
+}
+
+export type ApiResponse<T> = AxiosResponse<T>;

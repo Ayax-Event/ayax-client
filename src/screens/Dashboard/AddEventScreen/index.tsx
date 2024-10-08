@@ -20,7 +20,7 @@ const AddEventScreen = () => {
       {
         type: "",
         price: "",
-        stock: "",
+        stock: 0,
       },
     ],
   });
@@ -141,27 +141,20 @@ const AddEventScreen = () => {
       formData.append("tickets", JSON.stringify(eventData.ticketInfo));
 
       if (eventData.thumbnail.uri) {
-        const thumbnailBlob = await fetch(eventData.thumbnail.uri).then((r) =>
-          r.blob()
-        );
         formData.append(
           "thumbnail",
-          thumbnailBlob,
-          `thumbnail.${eventData.thumbnail.mimeType.split("/")[1]}`
+          `data:${eventData.thumbnail.mimeType};base64,${eventData.thumbnail.base64}`
         );
       }
 
-      for (let i = 0; i < eventData.images.length; i++) {
-        const img = eventData.images[i];
+      eventData.images.forEach((img, index) => {
         if (img.uri) {
-          const imageBlob = await fetch(img.uri).then((r) => r.blob());
           formData.append(
-            "images",
-            imageBlob,
-            `image${i}.${img.mimeType.split("/")[1]}`
+            `images`,
+            `data:${img.mimeType};base64,${img.base64}`
           );
         }
-      }
+      });
 
       await postEvent(formData);
 
@@ -184,8 +177,8 @@ const AddEventScreen = () => {
       });
     } catch (error) {
       Alert.alert(
-        "Error uploading form",
-        "Unknown error has occurred, please try again later. If the error persists, please contact developer at WhatsApp: +62 877-2055-9516"
+        "Error uplouding form",
+        "Unknown error has occur, please  try again later. If the error persists, please contact developer at whatsapp: +62 877-2055-9516"
       );
       console.error("Upload error:", error);
     } finally {

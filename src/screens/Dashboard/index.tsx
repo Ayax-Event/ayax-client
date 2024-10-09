@@ -7,7 +7,7 @@ import SearchScreen from "./SearchScreen";
 import AddEventScreen from "./AddEventScreen";
 import TicketScreen from "./TicketScreen";
 import ProfileScreen from "./Profile/ProfileScreen";
-import CustomHeader from "../../components/CustomHeader"; // Adjust the import path as needed
+import CustomHeader from "../../components/CustomHeader";
 
 const Tab = createBottomTabNavigator();
 

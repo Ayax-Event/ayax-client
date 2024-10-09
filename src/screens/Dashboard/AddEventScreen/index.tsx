@@ -59,6 +59,88 @@ const AddEventScreen = () => {
     setEventData({ ...eventData, images: newImages });
   };
 
+  const showImagePickerOptions = async (field: "thumbnail" | "images") => {
+    Alert.alert(
+      "Choose Image Source",
+      "Would you like to take a photo or choose from your gallery?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Take Photo",
+          onPress: () => launchCamera(field),
+        },
+        {
+          text: "Choose from Gallery",
+          onPress: () => launchImageLibrary(field),
+        },
+      ]
+    );
+  };
+
+  const launchCamera = async (field: "thumbnail" | "images") => {
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      Alert.alert(
+        "Permission Required",
+        "Camera access is required to take photos."
+      );
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: field === "thumbnail" ? [4, 3] : [1, 1],
+      base64: true,
+      quality: 0.3,
+    });
+
+    handleImagePickerResult(result, field);
+  };
+
+  const launchImageLibrary = async (field: "thumbnail" | "images") => {
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      Alert.alert(
+        "Permission Required",
+        "Gallery access is required to choose photos."
+      );
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: field === "thumbnail" ? [4, 3] : [1, 1],
+      base64: true,
+      quality: 0.3,
+    });
+
+    handleImagePickerResult(result, field);
+  };
+
+  const handleImagePickerResult = (
+    result: ImagePicker.ImagePickerResult,
+    field: "thumbnail" | "images"
+  ) => {
+    if (!result.canceled) {
+      if (field === "thumbnail") {
+        setEventData({ ...eventData, thumbnail: result.assets[0] });
+      } else if (field === "images") {
+        setEventData({
+          ...eventData,
+          images: [...eventData.images, result.assets[0]],
+        });
+      }
+    }
+  };
+
   const handleAddTicketType = () => {
     setEventData((prevData) => ({
       ...prevData,
@@ -91,33 +173,8 @@ const AddEventScreen = () => {
     setEventData({ ...eventData, tags: newTags });
   };
 
-  const handleImagePicker = async (field) => {
-    const permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
-      return;
-    }
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: field === "thumbnail" ? [4, 3] : [1, 1],
-      base64: true,
-      quality: 0.3,
-    });
-
-    if (!result.canceled) {
-      if (field === "thumbnail") {
-        setEventData({ ...eventData, thumbnail: result.assets[0] });
-      } else if (field === "images") {
-        setEventData({
-          ...eventData,
-          images: [...eventData.images, result.assets[0]],
-        });
-      }
-    }
+  const handleImagePicker = (field: "thumbnail" | "images") => {
+    showImagePickerOptions(field);
   };
 
   const handleDateChange = (event, selectedDate) => {

@@ -90,7 +90,7 @@ const Ticket = ({ ticket }) => {
         </TouchableOpacity>
       )}
 
-      {ticket.status === "paid" && (
+      {ticket.status === "paid" && !ticket.checkedIn && (
         <>
           <View style={styles.dashedLine} />
 
@@ -103,6 +103,12 @@ const Ticket = ({ ticket }) => {
             </Text>
           </View>
         </>
+      )}
+
+      {ticket.checkedIn && (
+        <View style={tw`items-center mt-4`}>
+          <Text style={tw`text-lg text-green-600`}>Checked In</Text>
+        </View>
       )}
 
       <Modal

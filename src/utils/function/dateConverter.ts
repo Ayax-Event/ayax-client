@@ -7,5 +7,7 @@ export const dateConverter = (dateString: string) => {
     year: "numeric", // '2024'
   };
 
-  return new Intl.DateTimeFormat("en-US", options).format(date);
+  const newDate =
+    new Intl.DateTimeFormat("en-US", options).format(date) + " • All Day";
+  return newDate;
 };

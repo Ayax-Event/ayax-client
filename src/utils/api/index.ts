@@ -134,3 +134,20 @@ export const getOrders = async (filter) => {
 
   return response;
 };
+
+export const getMyEvents = async () => {
+  const response = await axios({
+    method: "GET",
+    url: `${process.env.EXPO_PUBLIC_API_URL}/api/my-events`,
+  });
+  return response;
+};
+
+export const checkInTicket = async (orderId) => {
+  const response = await axios.post(
+    `${process.env.EXPO_PUBLIC_API_URL}/api/checkin-order`,
+    { orderId }
+  );
+
+  return response;
+};

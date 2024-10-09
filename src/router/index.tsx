@@ -15,6 +15,7 @@ import { Modal, Text, TouchableOpacity, View } from "react-native";
 import NetworkLogger from "react-native-network-logger";
 import MidtransScreen from "../screens/MidtransScreen";
 import ManageEvent from "../screens/Dashboard/Profile/ManageEvent";
+import CameraScreen from "../screens/CameraScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -59,6 +60,7 @@ const Navigation = () => {
               component={MidtransScreen}
             />
             <Stack.Screen name="ManageEvents" component={ManageEvent} />
+            <Stack.Screen name="CameraScreen" component={CameraScreen} />
           </>
         ) : (
           <>

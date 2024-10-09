@@ -59,6 +59,7 @@ const EventScreenView: React.FC<EventScreenViewProps> = ({
 
   const renderHorizontalItem = ({ item }: { item: Event }) => (
     <EventCard
+      userId={item.userId}
       eventId={item._id}
       eventImage={item.thumbnail}
       eventName={item.eventName}
@@ -71,6 +72,7 @@ const EventScreenView: React.FC<EventScreenViewProps> = ({
   const renderVerticalItem = ({ item }: { item: Event }) => (
     <View style={tw`w-1/2 p-1`}>
       <EventCard
+        userId={item.userId}
         eventId={item._id}
         eventImage={item.thumbnail}
         eventName={item.eventName}

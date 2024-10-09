@@ -7,12 +7,16 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import QRCode from "react-native-qrcode-svg";
 import tailwind from "twrnc";
+import { Color } from "../../constants/Color";
+import { useNavigation } from "@react-navigation/native";
 const tw = tailwind;
 
 const Ticket = ({ ticket }) => {
   const { buyerDetail, ticket: ticketInfo, event, price } = ticket;
   const [modalVisible, setModalVisible] = useState(false);
+  const nav = useNavigation();
 
   return (
     <View style={styles.ticketContainer}>
@@ -75,18 +79,24 @@ const Ticket = ({ ticket }) => {
           </Text>
         </View>
       </View>
+      {ticket.status === "pending" && (
+        <TouchableOpacity
+          style={[tw`p-2 rounded-md`, { backgroundColor: Color.primary }]}
+          onPress={() => nav.navigate("Midtrans", { uri: ticket.paymentUrl })}
+        >
+          <Text style={tw`text-white font-semibold text-center`}>
+            Complete Payment
+          </Text>
+        </TouchableOpacity>
+      )}
+
       {ticket.status === "paid" && (
         <>
           <View style={styles.dashedLine} />
 
           <View style={tw`items-center mt-4`}>
             <TouchableOpacity onPress={() => setModalVisible(true)}>
-              <Image
-                source={{
-                  uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/800px-QR_code_for_mobile_English_Wikipedia.svg.png",
-                }}
-                style={tw`w-32 h-32`}
-              />
+              <QRCode value={ticket._id} />
             </TouchableOpacity>
             <Text style={tw`mt-2 text-xs text-gray-500`}>
               Scan QR code for entry

@@ -121,7 +121,7 @@ const EventScreenView: React.FC<EventScreenViewProps> = ({
   );
 
   return (
-    <SafeAreaView style={tw`p-4`}>
+    <View style={tw`p-2`}>
       <FlatList
         data={events}
         renderItem={renderVerticalItem}
@@ -153,7 +153,7 @@ const EventScreenView: React.FC<EventScreenViewProps> = ({
           ) : null
         }
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

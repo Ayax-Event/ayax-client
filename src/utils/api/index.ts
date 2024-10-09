@@ -93,6 +93,21 @@ export const postEvent = async (formData) => {
   return response;
 };
 
+export const postProfilePict = async (formData) => {
+  const response = await axios.post(
+    `${process.env.EXPO_PUBLIC_API_URL}/api/update-profilepic`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Accept: "application/json",
+      },
+    }
+  );
+
+  return response;
+};
+
 export const getEventDetail = async (eventId) => {
   const response = await axios({
     method: "GET",

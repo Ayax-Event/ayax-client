@@ -155,7 +155,7 @@ const AddEventScreenView: React.FC<AddEventScreenViewProps> = ({
   const buttonTextStyle = tw`text-white text-center font-bold text-base`;
 
   return (
-    <SafeAreaView style={tw`flex-1 p-4`}>
+    <View style={tw`flex-1 p-4`}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Event Name Input */}
         <View style={sectionStyle}>
@@ -492,7 +492,7 @@ const AddEventScreenView: React.FC<AddEventScreenViewProps> = ({
           )}
         </TouchableOpacity>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

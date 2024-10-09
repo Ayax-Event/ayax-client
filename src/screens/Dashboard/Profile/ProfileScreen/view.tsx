@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Color } from "../../../../constants/Color";
@@ -23,7 +24,12 @@ const MenuItem = ({ icon, title, onPress = () => {} }) => (
   </TouchableOpacity>
 );
 
-export default function ProfileScreenView({ user, handleLogout }) {
+export default function ProfileScreenView({
+  user,
+  handleLogout,
+  handleEditProfilePicture,
+  isLoading,
+}) {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -34,8 +40,16 @@ export default function ProfileScreenView({ user, handleLogout }) {
             }}
             style={styles.profileImage}
           />
-          <TouchableOpacity style={styles.editButton}>
-            <Ionicons name="pencil-outline" size={20} color="white" />
+          <TouchableOpacity
+            style={styles.editButton}
+            onPress={handleEditProfilePicture}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : (
+              <Ionicons name="pencil-outline" size={20} color="white" />
+            )}
           </TouchableOpacity>
         </View>
       </View>

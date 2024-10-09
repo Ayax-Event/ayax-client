@@ -5,10 +5,12 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import * as ImagePicker from "expo-image-picker";
 import { Alert } from "react-native";
 import { postProfilePict } from "../../../../utils/api";
+import { useNavigation } from "@react-navigation/native";
 
 const ProfileScreen = () => {
   const { setIsLoggedIn, setUser, user } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
+  const nav = useNavigation();
 
   const showImagePickerOptions = async () => {
     Alert.alert("Change Profile Picture", "Choose a new profile picture", [
@@ -131,6 +133,7 @@ const ProfileScreen = () => {
       handleLogout={handleLogout}
       handleEditProfilePicture={showImagePickerOptions}
       isLoading={isLoading}
+      navigation={nav}
     />
   );
 };

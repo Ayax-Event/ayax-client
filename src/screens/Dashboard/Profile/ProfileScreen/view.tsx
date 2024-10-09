@@ -11,14 +11,21 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { Color } from "../../../../constants/Color";
 
-const MenuItem = ({ icon, title, onPress = () => {} }) => (
+const MenuItem = ({ icon, title, onPress, isLogout = false }) => (
   <TouchableOpacity style={styles.menuItem} onPress={onPress}>
-    <Ionicons name={icon} size={24} color="black" style={styles.menuIcon} />
-    <Text style={styles.menuText}>{title}</Text>
+    <Ionicons
+      name={icon}
+      size={24}
+      color={isLogout ? Color.primary : "black"}
+      style={styles.menuIcon}
+    />
+    <Text style={[styles.menuText, isLogout && { color: Color.primary }]}>
+      {title}
+    </Text>
     <Ionicons
       name="chevron-forward"
       size={24}
-      color="black"
+      color={isLogout ? Color.primary : "black"}
       style={styles.menuArrow}
     />
   </TouchableOpacity>
@@ -29,7 +36,37 @@ export default function ProfileScreenView({
   handleLogout,
   handleEditProfilePicture,
   isLoading,
+  navigation,
 }) {
+  // Menu items configuration
+  const menuItems = [
+    {
+      icon: "person-outline",
+      title: "Edit Profile",
+      screenName: "EditProfile",
+    },
+    {
+      icon: "calendar-outline",
+      title: "Manage Events",
+      screenName: "ManageEvents",
+    },
+    {
+      icon: "chatbubbles-outline",
+      title: "Message Center",
+      screenName: "MessageCenter",
+    },
+    {
+      icon: "notifications-outline",
+      title: "Notifications",
+      screenName: "Notifications",
+    },
+    {
+      icon: "ticket-outline",
+      title: "Ticket Issues",
+      screenName: "TicketIssues",
+    },
+  ];
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -72,12 +109,20 @@ export default function ProfileScreenView({
       </View>
 
       <View style={styles.menuContainer}>
-        <MenuItem icon="person-outline" title="Profile" />
-        <MenuItem icon="calendar-outline" title="Manage Events" />
-        <MenuItem icon="chatbubbles-outline" title="Message Center" />
-        <MenuItem icon="notifications-outline" title="Notification" />
-        <MenuItem icon="ticket-outline" title="Ticket Issues" />
-        <MenuItem icon="exit-outline" title="Log Out" onPress={handleLogout} />
+        {menuItems.map((item, index) => (
+          <MenuItem
+            key={index}
+            icon={item.icon}
+            title={item.title}
+            onPress={() => navigation.navigate(item.screenName)}
+          />
+        ))}
+        <MenuItem
+          icon="exit-outline"
+          title="Log Out"
+          onPress={handleLogout}
+          isLogout={true}
+        />
       </View>
     </ScrollView>
   );

@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Dashboard from "../screens/Dashboard";
 import EventDetailScreen from "../screens/Dashboard/Event/EventDetailScreen";
 import ChangePasswordScreen from "../screens/Dashboard/Profile/ChangePasswordScreen";
-import ProfileEditScreen from "../screens/Dashboard/Profile/ProfileEditScreen";
+import ProfileEditScreen from "../screens/Dashboard/Profile/ProfileDetailScreen";
 import EventExploreScreen from "../screens/Dashboard/Event/EventExploreScreen";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import RegisterScreen from "../screens/Auth/RegisterScreen";
@@ -14,6 +14,7 @@ import SplashScreen from "../screens/Splashscreen";
 import { Modal, Text, TouchableOpacity, View } from "react-native";
 import NetworkLogger from "react-native-network-logger";
 import MidtransScreen from "../screens/MidtransScreen";
+import ManageEvent from "../screens/Dashboard/Profile/ManageEvent";
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +58,7 @@ const Navigation = () => {
               options={{ headerShown: false }}
               component={MidtransScreen}
             />
+            <Stack.Screen name="ManageEvents" component={ManageEvent} />
           </>
         ) : (
           <>
